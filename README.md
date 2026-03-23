@@ -26,7 +26,7 @@ sudo rpm -i https://github.com/ebenezer-isaac/llmconveyors-go-package/releases/l
 ### Go install
 
 ```bash
-go install github.com/llmconveyors/cli@latest
+go install github.com/ebenezer-isaac/llmconveyors-go-package@latest
 ```
 
 ### Binary download

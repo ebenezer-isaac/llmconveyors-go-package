@@ -1,6 +1,6 @@
 package main
 
-import "github.com/llmconveyors/cli/cmd"
+import "github.com/ebenezer-isaac/llmconveyors-go-package/cmd"
 
 var (
 	version = "dev"

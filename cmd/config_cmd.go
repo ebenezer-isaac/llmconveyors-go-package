@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/llmconveyors/cli/internal/config"
+	"github.com/ebenezer-isaac/llmconveyors-go-package/internal/config"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

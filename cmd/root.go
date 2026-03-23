@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/llmconveyors/cli/internal/client"
-	"github.com/llmconveyors/cli/internal/config"
-	"github.com/llmconveyors/cli/internal/output"
+	"github.com/ebenezer-isaac/llmconveyors-go-package/internal/client"
+	"github.com/ebenezer-isaac/llmconveyors-go-package/internal/config"
+	"github.com/ebenezer-isaac/llmconveyors-go-package/internal/output"
 	"github.com/spf13/cobra"
 )
 

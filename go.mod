@@ -1,4 +1,4 @@
-module github.com/llmconveyors/cli
+module github.com/ebenezer-isaac/llmconveyors-go-package
 
 go 1.22
 

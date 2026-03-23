@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/llmconveyors/cli/internal/output"
+	"github.com/ebenezer-isaac/llmconveyors-go-package/internal/output"
 	"github.com/spf13/cobra"
 )
 
