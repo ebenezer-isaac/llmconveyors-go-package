@@ -7,20 +7,20 @@ Official Go CLI for the [LLM Conveyors](https://llmconveyors.com) AI Agent Platf
 ### Homebrew (macOS + Linux)
 
 ```bash
-brew install llmconveyors/tap/llmc
+brew install ebenezer-isaac/tap/llmc
 ```
 
 ### Debian / Ubuntu
 
 ```bash
-curl -LO https://github.com/llmconveyors/cli/releases/latest/download/llmc_amd64.deb
-sudo dpkg -i llmc_amd64.deb
+curl -LO https://github.com/ebenezer-isaac/llmconveyors-go-package/releases/latest/download/llmc_0.1.0_linux_amd64.deb
+sudo dpkg -i llmc_0.1.0_linux_amd64.deb
 ```
 
 ### RPM (Fedora / RHEL)
 
 ```bash
-sudo rpm -i https://github.com/llmconveyors/cli/releases/latest/download/llmc_amd64.rpm
+sudo rpm -i https://github.com/ebenezer-isaac/llmconveyors-go-package/releases/latest/download/llmc_0.1.0_linux_amd64.rpm
 ```
 
 ### Go install
@@ -32,17 +32,23 @@ go install github.com/llmconveyors/cli@latest
 ### Binary download
 
 ```bash
-# Linux
-curl -LO https://github.com/llmconveyors/cli/releases/latest/download/llmc_linux_amd64.tar.gz
-tar xzf llmc_linux_amd64.tar.gz
+# Linux (amd64)
+curl -LO https://github.com/ebenezer-isaac/llmconveyors-go-package/releases/latest/download/llmconveyors-go-package_0.1.0_linux_amd64.tar.gz
+tar xzf llmconveyors-go-package_0.1.0_linux_amd64.tar.gz
 sudo mv llmc /usr/local/bin/
 
-# macOS
-curl -LO https://github.com/llmconveyors/cli/releases/latest/download/llmc_darwin_arm64.tar.gz
-tar xzf llmc_darwin_arm64.tar.gz
+# macOS (Apple Silicon)
+curl -LO https://github.com/ebenezer-isaac/llmconveyors-go-package/releases/latest/download/llmconveyors-go-package_0.1.0_darwin_arm64.tar.gz
+tar xzf llmconveyors-go-package_0.1.0_darwin_arm64.tar.gz
 sudo mv llmc /usr/local/bin/
 
-# Windows — download .zip from GitHub Releases
+# macOS (Intel)
+curl -LO https://github.com/ebenezer-isaac/llmconveyors-go-package/releases/latest/download/llmconveyors-go-package_0.1.0_darwin_amd64.tar.gz
+tar xzf llmconveyors-go-package_0.1.0_darwin_amd64.tar.gz
+sudo mv llmc /usr/local/bin/
+
+# Windows — download .zip from GitHub Releases:
+# https://github.com/ebenezer-isaac/llmconveyors-go-package/releases/latest
 ```
 
 ## Quick Start
