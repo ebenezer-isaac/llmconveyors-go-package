@@ -44,7 +44,7 @@ nfpms:
 
 brews:
   - repository:
-      owner: llmconveyors
+      owner: ebenezer-isaac
       name: homebrew-tap
     name: llmc
     homepage: https://llmconveyors.com
