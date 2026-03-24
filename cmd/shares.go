@@ -30,7 +30,7 @@ var sharesCreateCmd = &cobra.Command{
 			return fmt.Errorf("invalid --data JSON: %w", err)
 		}
 
-		var result map[string]interface{}
+		var result interface{}
 		if err := apiClient.Post(ctx, "/shares", body, &result); err != nil {
 			return err
 		}
@@ -45,7 +45,7 @@ var sharesListCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		ctx := context.Background()
 
-		var result map[string]interface{}
+		var result interface{}
 		if err := apiClient.Get(ctx, "/shares/stats", &result); err != nil {
 			return err
 		}
@@ -61,7 +61,7 @@ var sharesGetPublicCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		ctx := context.Background()
 
-		var result map[string]interface{}
+		var result interface{}
 		if err := apiClient.Get(ctx, "/shares/"+args[0]+"/public", &result); err != nil {
 			return err
 		}
@@ -93,7 +93,7 @@ var sharesStatsCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		ctx := context.Background()
 
-		var result map[string]interface{}
+		var result interface{}
 		if err := apiClient.Get(ctx, "/shares/"+args[0]+"/stats", &result); err != nil {
 			return err
 		}

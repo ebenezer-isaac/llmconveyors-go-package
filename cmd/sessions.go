@@ -10,19 +10,22 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type session struct {
-	ID        string `json:"id"`
-	AgentType string `json:"agentType"`
-	Status    string `json:"status"`
-	CreatedAt string `json:"createdAt"`
-	UpdatedAt string `json:"updatedAt,omitempty"`
+type sessionItem struct {
+	ID        string                 `json:"id"`
+	Status    string                 `json:"status"`
+	CreatedAt string                 `json:"createdAt"`
+	UpdatedAt string                 `json:"updatedAt,omitempty"`
+	Metadata  map[string]interface{} `json:"metadata"`
 }
 
-type sessionListResponse struct {
-	Sessions []session `json:"sessions"`
-	Total    int       `json:"total"`
-	Page     int       `json:"page"`
-	Limit    int       `json:"limit"`
+func (s sessionItem) agentType() string {
+	if s.Metadata == nil {
+		return ""
+	}
+	if v, ok := s.Metadata["agentType"].(string); ok {
+		return v
+	}
+	return ""
 }
 
 var sessionsCmd = &cobra.Command{
@@ -44,7 +47,7 @@ var sessionsListCmd = &cobra.Command{
 			path += "&agentType=" + agent
 		}
 
-		var result sessionListResponse
+		var result []sessionItem
 		if err := apiClient.Get(ctx, path, &result); err != nil {
 			return err
 		}
@@ -53,22 +56,22 @@ var sessionsListCmd = &cobra.Command{
 		case output.FormatJSON:
 			return formatter.WriteJSON(result)
 		case output.FormatTable:
-			rows := make([][]string, len(result.Sessions))
-			for i, s := range result.Sessions {
-				rows[i] = []string{s.ID, s.AgentType, s.Status, s.CreatedAt}
+			rows := make([][]string, len(result))
+			for i, s := range result {
+				rows[i] = []string{s.ID, s.agentType(), s.Status, s.CreatedAt}
 			}
 			return formatter.WriteTable([]string{"ID", "AGENT", "STATUS", "CREATED"}, rows)
 		default:
-			for _, s := range result.Sessions {
+			for _, s := range result {
 				formatter.WriteText("", []output.KeyValue{
 					{Key: "ID", Value: s.ID},
-					{Key: "Agent", Value: s.AgentType},
+					{Key: "Agent", Value: s.agentType()},
 					{Key: "Status", Value: s.Status},
 					{Key: "Created", Value: s.CreatedAt},
 				})
 				fmt.Fprintln(os.Stdout)
 			}
-			fmt.Fprintf(os.Stderr, "Total: %d (page %d/%d)\n", result.Total, result.Page, (result.Total+result.Limit-1)/max(result.Limit, 1))
+			fmt.Fprintf(os.Stderr, "Total: %d\n", len(result))
 			return nil
 		}
 	},

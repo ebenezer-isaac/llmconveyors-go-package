@@ -22,9 +22,11 @@ var apiKeysListCmd = &cobra.Command{
 		ctx := context.Background()
 
 		var result []struct {
-			Hash      string   `json:"hash"`
-			Name      string   `json:"name"`
+			KeyHash   string   `json:"keyHash"`
+			KeyPrefix string   `json:"keyPrefix"`
+			Label     string   `json:"label"`
 			Scopes    []string `json:"scopes"`
+			IsActive  bool     `json:"isActive"`
 			CreatedAt string   `json:"createdAt"`
 		}
 		if err := apiClient.Get(ctx, "/settings/platform-api-keys", &result); err != nil {
@@ -37,15 +39,21 @@ var apiKeysListCmd = &cobra.Command{
 		case output.FormatTable:
 			rows := make([][]string, len(result))
 			for i, k := range result {
-				rows[i] = []string{k.Hash, k.Name, strings.Join(k.Scopes, ","), k.CreatedAt}
+				active := "no"
+				if k.IsActive {
+					active = "yes"
+				}
+				rows[i] = []string{k.KeyHash[:12] + "...", k.Label, strings.Join(k.Scopes, ","), active, k.CreatedAt}
 			}
-			return formatter.WriteTable([]string{"HASH", "NAME", "SCOPES", "CREATED"}, rows)
+			return formatter.WriteTable([]string{"HASH", "LABEL", "SCOPES", "ACTIVE", "CREATED"}, rows)
 		default:
 			for _, k := range result {
 				formatter.WriteText("", []output.KeyValue{
-					{Key: "Hash", Value: k.Hash},
-					{Key: "Name", Value: k.Name},
+					{Key: "Hash", Value: k.KeyHash},
+					{Key: "Prefix", Value: k.KeyPrefix},
+					{Key: "Label", Value: k.Label},
 					{Key: "Scopes", Value: strings.Join(k.Scopes, ", ")},
+					{Key: "Active", Value: fmt.Sprintf("%v", k.IsActive)},
 					{Key: "Created", Value: k.CreatedAt},
 				})
 				fmt.Fprintln(os.Stdout)

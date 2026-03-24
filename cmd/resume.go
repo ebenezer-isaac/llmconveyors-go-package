@@ -203,11 +203,11 @@ var resumeThemesCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		ctx := context.Background()
 
-		var result struct {
-			Themes []struct {
-				ID   string `json:"id"`
-				Name string `json:"name"`
-			} `json:"themes"`
+		var result []struct {
+			Name             string `json:"name"`
+			DisplayName      string `json:"displayName"`
+			Description      string `json:"description"`
+			SupportsMarkdown bool   `json:"supportsMarkdown"`
 		}
 		if err := apiClient.Get(ctx, "/resume/themes", &result); err != nil {
 			return err
@@ -217,14 +217,18 @@ var resumeThemesCmd = &cobra.Command{
 		case output.FormatJSON:
 			return formatter.WriteJSON(result)
 		case output.FormatTable:
-			rows := make([][]string, len(result.Themes))
-			for i, t := range result.Themes {
-				rows[i] = []string{t.ID, t.Name}
+			rows := make([][]string, len(result))
+			for i, t := range result {
+				md := "no"
+				if t.SupportsMarkdown {
+					md = "yes"
+				}
+				rows[i] = []string{t.Name, t.DisplayName, t.Description, md}
 			}
-			return formatter.WriteTable([]string{"ID", "NAME"}, rows)
+			return formatter.WriteTable([]string{"NAME", "DISPLAY", "DESCRIPTION", "MARKDOWN"}, rows)
 		default:
-			for _, t := range result.Themes {
-				fmt.Fprintf(os.Stdout, "  %s — %s\n", t.ID, t.Name)
+			for _, t := range result {
+				fmt.Fprintf(os.Stdout, "  %s — %s\n", t.Name, t.Description)
 			}
 			return nil
 		}

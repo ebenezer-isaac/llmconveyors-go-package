@@ -31,7 +31,7 @@ var contentSaveCmd = &cobra.Command{
 			return fmt.Errorf("invalid JSON in %s: %w", filePath, err)
 		}
 
-		var result map[string]interface{}
+		var result interface{}
 		if err := apiClient.Post(ctx, "/content/save", body, &result); err != nil {
 			return err
 		}

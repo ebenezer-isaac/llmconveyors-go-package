@@ -86,7 +86,7 @@ var privacyConsentsListCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		ctx := context.Background()
 
-		var result map[string]interface{}
+		var result interface{}
 		if err := apiClient.Get(ctx, "/privacy/consents", &result); err != nil {
 			return err
 		}
@@ -102,7 +102,7 @@ var privacyConsentsGrantCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		ctx := context.Background()
 
-		var result map[string]interface{}
+		var result interface{}
 		if err := apiClient.Post(ctx, "/privacy/consents/"+args[0], nil, &result); err != nil {
 			return err
 		}

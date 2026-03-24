@@ -20,7 +20,7 @@ var referralStatsCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		ctx := context.Background()
 
-		var result map[string]interface{}
+		var result interface{}
 		if err := apiClient.Get(ctx, "/referral/stats", &result); err != nil {
 			return err
 		}
@@ -63,7 +63,7 @@ var referralVanityCmd = &cobra.Command{
 			"vanityCode": args[0],
 		}
 
-		var result map[string]interface{}
+		var result interface{}
 		if err := apiClient.Post(ctx, "/referral/vanity-code", body, &result); err != nil {
 			return err
 		}
